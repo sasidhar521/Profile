@@ -5,11 +5,21 @@ body {
     overflow-x: hidden;
 }
 
+#webgl-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
 .bg-grid-pattern {
     background-size: 40px 40px;
     background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        linear-gradient(to right, rgba(30, 35, 40, 0.25) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 35, 40, 0.25) 1px, transparent 1px);
 }
 
 .gold-glow {
@@ -59,14 +69,16 @@ body {
 
 /* Smooth Card Hover Transitions */
 .interactive-card {
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(8px);
+    background: rgba(18, 21, 24, 0.75);
     position: relative;
 }
 
 .interactive-card:hover {
     transform: translateY(-5px);
     border-color: rgba(229, 169, 60, 0.4);
-    box-shadow: 0 10px 30px -10px rgba(229, 169, 60, 0.15);
+    box-shadow: 0 12px 30px -10px rgba(229, 169, 60, 0.15);
 }
 
 /* Custom Scrollbar */
