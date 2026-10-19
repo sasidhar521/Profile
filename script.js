@@ -1,36 +1,5 @@
 // Wait for the DOM to fully load
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // Resume download handler
-    window.downloadResume = function() {
-        alert('Resume download action triggered.');
-    };
-
-    // Contact form submit handler
-    const contactForm = document.querySelector('#contact form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Message sent successfully!');
-            contactForm.reset();
-        });
-    }
-
-    // Interactive card subtle mouse move tilt/glow effect
-    const cards = document.querySelectorAll('.interactive-card');
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-        });
-    });
-
-});// Wait for the DOM to fully load
-document.addEventListener('DOMContentLoaded', () => {
 
     /* ==========================================================================
        1. ORIGINAL HANDLERS & CARD INTERACTION
@@ -116,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       3. THREE.JS 3D MOON & WINGED STAG ENGINE
+       3. THREE.JS REALISTIC 3D MOON & WINGED STAG ENGINE
        ========================================================================== */
     const canvas = document.getElementById('webgl-canvas');
     if (!canvas || typeof THREE === 'undefined') return;
@@ -137,28 +106,29 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
+    renderer.toneMappingExposure = 1.2;
 
-    // Procedural Lunar Map Generator
-    function createMoonTexture() {
+    // FIX 1: REALISTIC PROCEDURAL LUNAR TEXTURE (NO CARTOON RINGS)
+    function createRealisticMoonTexture() {
         const texCanvas = document.createElement('canvas');
         texCanvas.width = 1024;
         texCanvas.height = 512;
         const ctx = texCanvas.getContext('2d');
 
-        ctx.fillStyle = '#888888';
+        // Base lunar surface color
+        ctx.fillStyle = '#9e9e9e';
         ctx.fillRect(0, 0, 1024, 512);
 
-        // Noise & Maria basins
-        for (let i = 0; i < 2000; i++) {
+        // Soft Maria Basins (Dark lunar seas)
+        for (let i = 0; i < 80; i++) {
             const x = Math.random() * 1024;
             const y = Math.random() * 512;
-            const radius = Math.random() * 80 + 10;
-            const shade = Math.random() * 50;
+            const radius = Math.random() * 120 + 30;
 
             const grad = ctx.createRadialGradient(x, y, 0, x, y, radius);
-            grad.addColorStop(0, `rgba(${shade}, ${shade}, ${shade}, 0.6)`);
-            grad.addColorStop(1, 'rgba(136, 136, 136, 0)');
+            grad.addColorStop(0, 'rgba(40, 42, 45, 0.45)');
+            grad.addColorStop(0.5, 'rgba(60, 62, 65, 0.25)');
+            grad.addColorStop(1, 'rgba(158, 158, 158, 0)');
 
             ctx.fillStyle = grad;
             ctx.beginPath();
@@ -166,42 +136,41 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fill();
         }
 
-        // Craters
-        for (let i = 0; i < 400; i++) {
+        // Soft realistic micro-noise craters
+        for (let i = 0; i < 1500; i++) {
             const x = Math.random() * 1024;
             const y = Math.random() * 512;
-            const r = Math.random() * 12 + 2;
+            const radius = Math.random() * 6 + 1;
 
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#ffffff';
-            ctx.beginPath();
-            ctx.arc(x, y, r, 0, Math.PI * 2);
-            ctx.stroke();
+            const grad = ctx.createRadialGradient(x - radius * 0.3, y - radius * 0.3, 0, x, y, radius);
+            grad.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+            grad.addColorStop(0.6, 'rgba(80, 80, 80, 0.3)');
+            grad.addColorStop(1, 'rgba(158, 158, 158, 0)');
 
-            ctx.fillStyle = '#222222';
+            ctx.fillStyle = grad;
             ctx.beginPath();
-            ctx.arc(x + r * 0.2, y + r * 0.2, r * 0.8, 0, Math.PI * 2);
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
             ctx.fill();
         }
 
         return new THREE.CanvasTexture(texCanvas);
     }
 
-    const moonTexture = createMoonTexture();
+    const moonTexture = createRealisticMoonTexture();
 
     // 3D Moon Mesh
     const moonGeo = new THREE.SphereGeometry(3.5, 64, 64);
     const moonMat = new THREE.MeshStandardMaterial({
         map: moonTexture,
-        roughness: 0.85,
-        metalness: 0.1,
+        roughness: 0.9,
+        metalness: 0.05,
         color: new THREE.Color(0xdce5ed)
     });
     const moonMesh = new THREE.Mesh(moonGeo, moonMat);
     scene.add(moonMesh);
 
     // Atmospheric Glow Rim Shader
-    const atmosphereGeo = new THREE.SphereGeometry(3.68, 64, 64);
+    const atmosphereGeo = new THREE.SphereGeometry(3.62, 64, 64);
     const atmosphereMat = new THREE.ShaderMaterial({
         vertexShader: `
             varying vec3 vNormal;
@@ -213,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fragmentShader: `
             varying vec3 vNormal;
             void main() {
-                float intensity = pow(0.6 - dot(vNormal, vec3(0, 0, 1.0)), 2.2);
+                float intensity = pow(0.55 - dot(vNormal, vec3(0, 0, 1.0)), 2.5);
                 gl_FragColor = vec4(0.9, 0.66, 0.24, 1.0) * intensity;
             }
         `,
@@ -224,52 +193,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const atmosphereMesh = new THREE.Mesh(atmosphereGeo, atmosphereMat);
     scene.add(atmosphereMesh);
 
-    // 3D Winged Stag Emblem Group
+    // FIX 2: PREVENT 3D EMBLEM CLIPPING (POSITIONED CLEARLY IN FRONT OF THE MOON)
     const stagGroup = new THREE.Group();
 
-    // Body Core
-    const bodyGeo = new THREE.ConeGeometry(0.5, 1.8, 16);
     const goldEmissiveMat = new THREE.MeshStandardMaterial({
         color: 0xe5a93c,
         emissive: 0x996110,
-        metalness: 0.8,
-        roughness: 0.2
+        metalness: 0.85,
+        roughness: 0.25,
+        depthTest: true
     });
+
+    // Body Core
+    const bodyGeo = new THREE.ConeGeometry(0.4, 1.5, 16);
     const bodyMesh = new THREE.Mesh(bodyGeo, goldEmissiveMat);
     bodyMesh.rotation.x = Math.PI;
     stagGroup.add(bodyMesh);
 
     // Head
-    const headGeo = new THREE.SphereGeometry(0.35, 16, 16);
+    const headGeo = new THREE.SphereGeometry(0.3, 16, 16);
     const headMesh = new THREE.Mesh(headGeo, goldEmissiveMat);
-    headMesh.position.set(0, 1, 0);
+    headMesh.position.set(0, 0.9, 0);
     stagGroup.add(headMesh);
 
     // Wings
     const wingShape = new THREE.Shape();
     wingShape.moveTo(0, 0);
-    wingShape.quadraticCurveTo(1.2, 1.8, 2.8, 1.2);
-    wingShape.quadraticCurveTo(2.0, 0.2, 0, -0.8);
+    wingShape.quadraticCurveTo(1.0, 1.5, 2.2, 1.0);
+    wingShape.quadraticCurveTo(1.5, 0.1, 0, -0.6);
 
-    const extrudeSettings = { depth: 0.05, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: 0.02, bevelThickness: 0.02 };
+    const extrudeSettings = { depth: 0.04, bevelEnabled: true, bevelSegments: 2, steps: 1, bevelSize: 0.01, bevelThickness: 0.01 };
     const wingGeo = new THREE.ExtrudeGeometry(wingShape, extrudeSettings);
 
     const leftWing = new THREE.Mesh(wingGeo, goldEmissiveMat);
-    leftWing.position.set(-0.2, 0.4, 0);
+    leftWing.position.set(-0.15, 0.3, 0);
     leftWing.scale.set(-1, 1, 1);
 
     const rightWing = new THREE.Mesh(wingGeo, goldEmissiveMat);
-    rightWing.position.set(0.2, 0.4, 0);
+    rightWing.position.set(0.15, 0.3, 0);
 
     stagGroup.add(leftWing);
     stagGroup.add(rightWing);
-    stagGroup.position.set(0, -0.2, 4.2);
-    stagGroup.scale.set(0.65, 0.65, 0.65);
+
+    // Move stag mesh well in front of the moon (z = 4.8 vs moon z = 0) to avoid intersection
+    stagGroup.position.set(0, -0.2, 4.8);
+    stagGroup.scale.set(0.6, 0.6, 0.6);
+    stagGroup.renderOrder = 10;
     scene.add(stagGroup);
 
-    // Ambient Space Stars / Cosmic Dust
+    // Ambient Space Stars
     const starsGeo = new THREE.BufferGeometry();
-    const starCount = 800;
+    const starCount = 600;
     const starPositions = new Float32Array(starCount * 3);
 
     for (let i = 0; i < starCount * 3; i += 3) {
@@ -278,24 +252,24 @@ document.addEventListener('DOMContentLoaded', () => {
         starPositions[i + 2] = (Math.random() - 0.5) * 80;
     }
     starsGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    const starsMat = new THREE.PointsMaterial({ color: 0xe5a93c, size: 0.12, transparent: true, opacity: 0.6 });
+    const starsMat = new THREE.PointsMaterial({ color: 0xe5a93c, size: 0.1, transparent: true, opacity: 0.5 });
     const starField = new THREE.Points(starsGeo, starsMat);
     scene.add(starField);
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0x1a202c, 1.5);
+    const ambientLight = new THREE.AmbientLight(0x1a202c, 1.2);
     scene.add(ambientLight);
 
-    const mainSun = new THREE.DirectionalLight(0xfff5ea, 2.5);
+    const mainSun = new THREE.DirectionalLight(0xfff5ea, 2.8);
     mainSun.position.set(8, 6, 10);
     scene.add(mainSun);
 
-    const goldFill = new THREE.PointLight(0xe5a93c, 3, 20);
+    const goldFill = new THREE.PointLight(0xe5a93c, 2.5, 20);
     goldFill.position.set(-5, -2, 5);
     scene.add(goldFill);
 
     /* ==========================================================================
-       4. GSAP SCROLLTRIGGER TIMELINE (Peryton 3D Moon Motion)
+       4. GSAP SCROLLTRIGGER TIMELINE (Cleaned Positions)
        ========================================================================== */
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
@@ -311,9 +285,8 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .to(moonMesh.position, { x: 3.2, y: 0.5, z: -1.0 }, 0)
         .to(atmosphereMesh.position, { x: 3.2, y: 0.5, z: -1.0 }, 0)
-        .to(moonMesh.rotation, { y: Math.PI * 0.8, x: 0.3 }, 0)
-        .to(stagGroup.position, { x: 2.8, y: -0.2, z: 2.2 }, 0)
-        .to(stagGroup.rotation, { y: -0.4 }, 0);
+        .to(moonMesh.rotation, { y: Math.PI * 0.8 }, 0)
+        .to(stagGroup.position, { x: 2.8, y: -0.2, z: 3.8 }, 0);
 
         // Section 2 -> Section 3 Transition (Hackathons)
         gsap.timeline({
@@ -326,9 +299,8 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .to(moonMesh.position, { x: -3.5, y: -0.8, z: 0 }, 0)
         .to(atmosphereMesh.position, { x: -3.5, y: -0.8, z: 0 }, 0)
-        .to(moonMesh.rotation, { y: Math.PI * 1.6, x: -0.2 }, 0)
-        .to(stagGroup.position, { x: -2.8, y: -0.6, z: 2.8 }, 0)
-        .to(stagGroup.rotation, { y: 0.5 }, 0);
+        .to(moonMesh.rotation, { y: Math.PI * 1.6 }, 0)
+        .to(stagGroup.position, { x: -2.8, y: -0.6, z: 3.8 }, 0);
 
         // Section 3 -> Section 4 Transition (About / Roadmap)
         gsap.timeline({
@@ -341,9 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .to(moonMesh.position, { x: 0, y: 1.2, z: -4 }, 0)
         .to(atmosphereMesh.position, { x: 0, y: 1.2, z: -4 }, 0)
-        .to(moonMesh.scale, { x: 1.4, y: 1.4, z: 1.4 }, 0)
-        .to(atmosphereMesh.scale, { x: 1.4, y: 1.4, z: 1.4 }, 0)
-        .to(stagGroup.position, { x: 0, y: 0.8, z: 1.5 }, 0);
+        .to(stagGroup.position, { x: 0, y: 0.8, z: 2.5 }, 0);
     }
 
     /* ==========================================================================
@@ -363,16 +333,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const elapsedTime = clock.getElapsedTime();
 
         // Idle Moon & Stag motion
-        moonMesh.rotation.y += 0.002;
-        atmosphereMesh.rotation.y += 0.002;
+        moonMesh.rotation.y += 0.0015;
+        atmosphereMesh.rotation.y += 0.0015;
 
-        stagGroup.position.y += Math.sin(elapsedTime * 2) * 0.003;
-        leftWing.rotation.z = Math.sin(elapsedTime * 3) * 0.15;
-        rightWing.rotation.z = -Math.sin(elapsedTime * 3) * 0.15;
+        stagGroup.position.y += Math.sin(elapsedTime * 2) * 0.002;
+        leftWing.rotation.z = Math.sin(elapsedTime * 3) * 0.12;
+        rightWing.rotation.z = -Math.sin(elapsedTime * 3) * 0.12;
 
-        // Subtle Mouse Parallax Spring
-        scene.rotation.y += (mouseXParallax * 0.12 - scene.rotation.y) * 0.05;
-        scene.rotation.x += (-mouseYParallax * 0.12 - scene.rotation.x) * 0.05;
+        // Subtle Mouse Parallax
+        scene.rotation.y += (mouseXParallax * 0.08 - scene.rotation.y) * 0.05;
+        scene.rotation.x += (-mouseYParallax * 0.08 - scene.rotation.x) * 0.05;
 
         renderer.render(scene, camera);
         requestAnimationFrame(renderFrame);
