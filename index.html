@@ -214,251 +214,253 @@
         </section>
 
         <!-- ======================================================== -->
-        <!-- CLIENT PROJECTS SECTION                                  -->
+        <!-- COMPACT WORKS & HACKATHONS DIRECTORY                     -->
+        <!-- Dashboard shows clean compact cards; click opens details  -->
         <!-- ======================================================== -->
-        <section id="projects" class="max-w-7xl mx-auto px-6 py-20 border-t border-[#1E2328]/50">
-            <div class="mb-12">
-                <span class="text-xs font-mono uppercase tracking-widest text-[#E5A93C]">Client Work</span>
-                <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">Selected <span class="text-[#E5A93C]">Projects</span></h2>
-                <p class="text-slate-400 text-sm mt-2">A snapshot of problem-solving, design thinking, and product execution across real client engagements.</p>
+        <section id="projects" class="max-w-7xl mx-auto px-6 py-20 border-t border-[#1E2328]/50 relative">
+            <!-- Anchor for Hackathons navigation -->
+            <div id="hackathons" class="absolute -top-10 left-0"></div>
+
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-[#E5A93C]">Portfolio Directory</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">Projects &amp; <span class="text-[#E5A93C]">Hackathons</span></h2>
+                    <p class="text-slate-400 text-sm mt-1">Compact overview. Click any card to open its full dedicated deep-dive view with technical working procedures and photo gallery.</p>
+                </div>
+
+                <!-- Category Switcher Tabs -->
+                <div class="flex items-center gap-1.5 p-1 bg-[#121518] rounded-xl border border-[#1E2328] w-fit">
+                    <button onclick="filterDirectory('all')" id="filter-all" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all bg-[#E5A93C] text-black">
+                        All (6)
+                    </button>
+                    <button onclick="filterDirectory('project')" id="filter-project" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white transition-all">
+                        Projects (4)
+                    </button>
+                    <button onclick="filterDirectory('hackathon')" id="filter-hackathon" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white transition-all">
+                        Hackathons (2)
+                    </button>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Compact Grid (Teaser Cards) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="directory-grid">
                 
-                <!-- ==================================================== -->
-                <!-- 📌 PROJECT 01: Northstar Studio                      -->
-                <!-- How to add an image:                                 -->
-                <!-- Place an <img src="images/northstar.jpg" class="..."> -->
-                <!-- inside the card header or before the text!           -->
-                <!-- ==================================================== -->
-                <div class="p-6 sm:p-8 rounded-2xl border border-[#1E2328] bg-[#121518]/60 space-y-6 interactive-card hover:border-[#E5A93C]/40 transition-all duration-300">
-                    <div class="flex justify-between items-start border-b border-[#1E2328] pb-4">
-                        <div>
-                            <span class="text-[#E5A93C] font-mono text-xs font-bold tracking-widest uppercase">Project 01</span>
-                            <!-- ✏️ EDIT TEXT: Project Title -->
-                            <h3 class="text-xl font-bold text-white mt-0.5">Northstar Studio</h3>
+                <!-- CARD 1: SENSORS PROJECT (With Photo Thumbnail) -->
+                <div class="directory-item project p-5 rounded-2xl border border-[#1E2328] bg-[#121518]/70 hover:border-[#E5A93C]/50 transition-all duration-300 interactive-card flex flex-col justify-between group cursor-pointer" onclick="openItemDetail('sensors')">
+                    <div class="space-y-3">
+                        <div class="h-36 rounded-xl overflow-hidden border border-[#1E2328] relative bg-[#0B0D0E]">
+                            <img src="/assets/aistudio/UTIA_1_6d6f5093.jpeg" 
+                                 onerror="this.src='public/assets/aistudio/UTIA_1_6d6f5093.jpeg'" 
+                                 alt="Sensors Circuit" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-2.5 right-2.5 bg-[#0B0D0E]/85 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-[#E5A93C] border border-[#1E2328]">
+                                Hardware · 3 Photos
+                            </span>
                         </div>
-                        <span class="text-xs font-mono px-2.5 py-1 rounded bg-[#0B0D0E] text-slate-400 border border-[#1E2328]">Brand Website</span>
+                        <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                            <span class="text-[#E5A93C] font-bold">PROJECT 01</span>
+                            <span>Embedded Systems</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-[#E5A93C] transition-colors leading-snug">
+                            Sensors: Ultrasonic, Infrared, Touch Sensor
+                        </h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">
+                            Hands-on exploratory research and hardware prototyping on acoustic time-of-flight, IR reflection, and capacitive touch sensing.
+                        </p>
                     </div>
 
-                    <!-- 🖼️ OPTIONAL: PROJECT IMAGE PREVIEW (Uncomment to display image) -->
-                    <!-- 
-                    <div class="rounded-xl overflow-hidden border border-[#1E2328] h-48 bg-[#0B0D0E]">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Northstar Studio Preview" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-                    </div>
-                    -->
-
-                    <div class="space-y-4 text-sm">
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Challenge</span>
-                            <p class="text-slate-300">The client needed a sharper digital presence to attract premium clients and modernize their brand story.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Solution</span>
-                            <p class="text-slate-300">I designed and developed a conversion-focused landing page with stronger messaging, clean structure, and a more polished visual identity.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Outcome</span>
-                            <p class="text-slate-300">Improved brand clarity, a more premium presentation, and better user engagement across key conversion points.</p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">UI/UX</span>
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">Web Design</span>
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">Responsive</span>
+                    <div class="pt-4 border-t border-[#1E2328] mt-4 flex items-center justify-between">
+                        <span class="text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Calibrated
+                        </span>
+                        <span class="text-xs font-mono text-[#E5A93C] group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                            Open Details ↗
+                        </span>
                     </div>
                 </div>
 
-                <!-- 📌 PROJECT 02: Aster Labs -->
-                <div class="p-6 sm:p-8 rounded-2xl border border-[#1E2328] bg-[#121518]/60 space-y-6 interactive-card hover:border-[#E5A93C]/40 transition-all duration-300">
-                    <div class="flex justify-between items-start border-b border-[#1E2328] pb-4">
-                        <div>
-                            <span class="text-[#E5A93C] font-mono text-xs font-bold tracking-widest uppercase">Project 02</span>
-                            <h3 class="text-xl font-bold text-white mt-0.5">Aster Labs</h3>
+                <!-- CARD 2: ASTER LABS -->
+                <div class="directory-item project p-5 rounded-2xl border border-[#1E2328] bg-[#121518]/70 hover:border-[#E5A93C]/50 transition-all duration-300 interactive-card flex flex-col justify-between group cursor-pointer" onclick="openItemDetail('aster')">
+                    <div class="space-y-3">
+                        <div class="h-36 rounded-xl overflow-hidden border border-[#1E2328] bg-gradient-to-br from-[#0B0D0E] to-[#1a1f26] flex items-center justify-center relative p-4">
+                            <div class="w-10 h-10 rounded-lg bg-[#E5A93C]/10 border border-[#E5A93C]/30 flex items-center justify-center text-[#E5A93C] font-mono text-sm font-bold">
+                                AL
+                            </div>
+                            <span class="absolute top-2.5 right-2.5 bg-[#0B0D0E]/85 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-slate-300 border border-[#1E2328]">
+                                SaaS UI
+                            </span>
                         </div>
-                        <span class="text-xs font-mono px-2.5 py-1 rounded bg-[#0B0D0E] text-slate-400 border border-[#1E2328]">SaaS Dashboard</span>
+                        <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                            <span class="text-[#E5A93C] font-bold">PROJECT 02</span>
+                            <span>Dashboard Design</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-[#E5A93C] transition-colors leading-snug">
+                            Aster Labs Analytics
+                        </h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">
+                            Clean product dashboard interface designed for fast data comprehension, operational workflows, and rapid onboarding.
+                        </p>
                     </div>
 
-                    <div class="space-y-4 text-sm">
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Challenge</span>
-                            <p class="text-slate-300">The product team needed a cleaner dashboard experience to help users understand data and actions faster.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Solution</span>
-                            <p class="text-slate-300">I structured the layout around clarity and workflow efficiency, improving hierarchy, cards, and navigation patterns for everyday use.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Outcome</span>
-                            <p class="text-slate-300">Delivered a cleaner product experience with significantly easier onboarding and stronger dashboard usability.</p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">UX Flow</span>
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">Dashboard</span>
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">Product Design</span>
+                    <div class="pt-4 border-t border-[#1E2328] mt-4 flex items-center justify-between">
+                        <span class="text-[11px] font-mono text-slate-500">UI/UX · React</span>
+                        <span class="text-xs font-mono text-[#E5A93C] group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                            Open Details ↗
+                        </span>
                     </div>
                 </div>
 
-                <!-- 📌 PROJECT 03: Crest Health -->
-                <div class="p-6 sm:p-8 rounded-2xl border border-[#1E2328] bg-[#121518]/60 space-y-6 interactive-card hover:border-[#E5A93C]/40 transition-all duration-300">
-                    <div class="flex justify-between items-start border-b border-[#1E2328] pb-4">
-                        <div>
-                            <span class="text-[#E5A93C] font-mono text-xs font-bold tracking-widest uppercase">Project 03</span>
-                            <h3 class="text-xl font-bold text-white mt-0.5">Crest Health</h3>
+                <!-- CARD 3: CREST HEALTH -->
+                <div class="directory-item project p-5 rounded-2xl border border-[#1E2328] bg-[#121518]/70 hover:border-[#E5A93C]/50 transition-all duration-300 interactive-card flex flex-col justify-between group cursor-pointer" onclick="openItemDetail('crest')">
+                    <div class="space-y-3">
+                        <div class="h-36 rounded-xl overflow-hidden border border-[#1E2328] bg-gradient-to-br from-[#0B0D0E] to-[#162329] flex items-center justify-center relative p-4">
+                            <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-mono text-sm font-bold">
+                                CH
+                            </div>
+                            <span class="absolute top-2.5 right-2.5 bg-[#0B0D0E]/85 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-cyan-400 border border-[#1E2328]">
+                                Healthtech
+                            </span>
                         </div>
-                        <span class="text-xs font-mono px-2.5 py-1 rounded bg-[#0B0D0E] text-slate-400 border border-[#1E2328]">Health Platform</span>
+                        <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                            <span class="text-[#E5A93C] font-bold">PROJECT 03</span>
+                            <span>Portal Experience</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-[#E5A93C] transition-colors leading-snug">
+                            Crest Health Platform
+                        </h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">
+                            Human-centered patient portal prioritizing appointment access, health record clarity, and high accessibility compliance.
+                        </p>
                     </div>
 
-                    <div class="space-y-4 text-sm">
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Challenge</span>
-                            <p class="text-slate-300">Patients struggled with a confusing portal layout and poor access to appointments, records, and updates.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Solution</span>
-                            <p class="text-slate-300">I simplified the interface into a more trustworthy, human-centered experience with clear actions and better information hierarchy.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Outcome</span>
-                            <p class="text-slate-300">Improved patient experience, reduced uncertainty, and supported more intuitive access to core healthcare functions.</p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">Accessibility</span>
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">UX Strategy</span>
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">Portal Design</span>
+                    <div class="pt-4 border-t border-[#1E2328] mt-4 flex items-center justify-between">
+                        <span class="text-[11px] font-mono text-slate-500">Accessibility</span>
+                        <span class="text-xs font-mono text-[#E5A93C] group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                            Open Details ↗
+                        </span>
                     </div>
                 </div>
 
-                <!-- 📌 PROJECT 04: Harbor Retail -->
-                <div class="p-6 sm:p-8 rounded-2xl border border-[#1E2328] bg-[#121518]/60 space-y-6 interactive-card hover:border-[#E5A93C]/40 transition-all duration-300">
-                    <div class="flex justify-between items-start border-b border-[#1E2328] pb-4">
-                        <div>
-                            <span class="text-[#E5A93C] font-mono text-xs font-bold tracking-widest uppercase">Project 04</span>
-                            <h3 class="text-xl font-bold text-white mt-0.5">Harbor Retail</h3>
+                <!-- CARD 4: HARBOR RETAIL -->
+                <div class="directory-item project p-5 rounded-2xl border border-[#1E2328] bg-[#121518]/70 hover:border-[#E5A93C]/50 transition-all duration-300 interactive-card flex flex-col justify-between group cursor-pointer" onclick="openItemDetail('harbor')">
+                    <div class="space-y-3">
+                        <div class="h-36 rounded-xl overflow-hidden border border-[#1E2328] bg-gradient-to-br from-[#0B0D0E] to-[#201d18] flex items-center justify-center relative p-4">
+                            <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-[#E5A93C] font-mono text-sm font-bold">
+                                HR
+                            </div>
+                            <span class="absolute top-2.5 right-2.5 bg-[#0B0D0E]/85 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-amber-400 border border-[#1E2328]">
+                                E-Commerce
+                            </span>
                         </div>
-                        <span class="text-xs font-mono px-2.5 py-1 rounded bg-[#0B0D0E] text-slate-400 border border-[#1E2328]">E-commerce Launch</span>
+                        <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                            <span class="text-[#E5A93C] font-bold">PROJECT 04</span>
+                            <span>Storefront Launch</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-[#E5A93C] transition-colors leading-snug">
+                            Harbor Retail Storefront
+                        </h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">
+                            Conversion-optimized product storefront emphasizing mobile-first storytelling and checkout flow speed.
+                        </p>
                     </div>
 
-                    <div class="space-y-4 text-sm">
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Challenge</span>
-                            <p class="text-slate-300">The business wanted a launch-ready storefront that could present products clearly and increase customer trust quickly.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Solution</span>
-                            <p class="text-slate-300">I created a modern storefront structure focused on product storytelling, conversion flow, and an engaging mobile-first experience.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">Outcome</span>
-                            <p class="text-slate-300">The launch page delivered a cleaner customer journey and a stronger first impression for the brand.</p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">E-commerce</span>
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">Conversion</span>
-                        <span class="px-2.5 py-1 rounded-full border border-[#1E2328] bg-[#0B0D0E] text-[10px] uppercase tracking-wider text-slate-300">Landing Page</span>
+                    <div class="pt-4 border-t border-[#1E2328] mt-4 flex items-center justify-between">
+                        <span class="text-[11px] font-mono text-slate-500">Conversion · Web</span>
+                        <span class="text-xs font-mono text-[#E5A93C] group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                            Open Details ↗
+                        </span>
                     </div>
                 </div>
+
+                <!-- CARD 5: HACKATHON 1 -->
+                <div class="directory-item hackathon p-5 rounded-2xl border border-[#1E2328] bg-[#121518]/70 hover:border-[#E5A93C]/50 transition-all duration-300 interactive-card flex flex-col justify-between group cursor-pointer" onclick="openItemDetail('hackathon-1')">
+                    <div class="space-y-3">
+                        <div class="h-36 rounded-xl overflow-hidden border border-[#1E2328] bg-gradient-to-br from-[#0B0D0E] to-[#1e1724] flex items-center justify-center relative p-4">
+                            <div class="text-center">
+                                <span class="text-2xl">⚡</span>
+                                <p class="text-[11px] font-mono text-purple-300 mt-1">24h Rapid Sprint</p>
+                            </div>
+                            <span class="absolute top-2.5 right-2.5 bg-[#0B0D0E]/85 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-purple-400 border border-[#1E2328]">
+                                Hackathon 2026
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                            <span class="text-[#E5A93C] font-bold">SPRINT 01</span>
+                            <span>Alliance University</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-[#E5A93C] transition-colors leading-snug">
+                            Hackathon Project One
+                        </h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">
+                            Rapid problem definition, solution architecture, and live prototype demo built under hackathon time limits.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-[#1E2328] mt-4 flex items-center justify-between">
+                        <span class="text-[11px] font-mono text-purple-400">Prototyping</span>
+                        <span class="text-xs font-mono text-[#E5A93C] group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                            Open Details ↗
+                        </span>
+                    </div>
+                </div>
+
+                <!-- CARD 6: HACKATHON 2 -->
+                <div class="directory-item hackathon p-5 rounded-2xl border border-[#1E2328] bg-[#121518]/70 hover:border-[#E5A93C]/50 transition-all duration-300 interactive-card flex flex-col justify-between group cursor-pointer" onclick="openItemDetail('hackathon-2')">
+                    <div class="space-y-3">
+                        <div class="h-36 rounded-xl overflow-hidden border border-[#1E2328] bg-gradient-to-br from-[#0B0D0E] to-[#10231e] flex items-center justify-center relative p-4">
+                            <div class="text-center">
+                                <span class="text-2xl">🤖</span>
+                                <p class="text-[11px] font-mono text-emerald-300 mt-1">AI Innovation Sprint</p>
+                            </div>
+                            <span class="absolute top-2.5 right-2.5 bg-[#0B0D0E]/85 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-emerald-400 border border-[#1E2328]">
+                                Hackathon 2026
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                            <span class="text-[#E5A93C] font-bold">SPRINT 02</span>
+                            <span>AI &amp; ML</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-[#E5A93C] transition-colors leading-snug">
+                            AI Innovation Sprint
+                        </h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">
+                            Developing applied machine learning and automation workflows for real-world challenge statements.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-[#1E2328] mt-4 flex items-center justify-between">
+                        <span class="text-[11px] font-mono text-emerald-400">AI Challenge</span>
+                        <span class="text-xs font-mono text-[#E5A93C] group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                            Open Details ↗
+                        </span>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <!-- ======================================================== -->
-        <!-- HACKATHON WORK SECTION                                   -->
+        <!-- DEDICATED FULL-SCREEN DETAIL MODAL                       -->
+        <!-- Opens with smooth backdrop blur when any card is clicked -->
         <!-- ======================================================== -->
-        <section id="hackathons" class="max-w-7xl mx-auto px-6 py-20 border-t border-[#1E2328]/50">
-            <div class="mb-12">
-                <span class="text-xs font-mono uppercase tracking-widest text-[#E5A93C]">Hackathon Work</span>
-                <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">Ideas I've <span class="text-[#E5A93C]">sprinted</span></h2>
-                <p class="text-slate-400 text-sm mt-2">Fast builds, bold ideas, and lessons learned under pressure.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Hackathon 1 -->
-                <div class="p-6 sm:p-8 rounded-2xl border border-[#1E2328] bg-[#121518]/60 space-y-6 interactive-card hover:border-[#E5A93C]/40 transition-all duration-300">
-                    <div class="flex justify-between items-start border-b border-[#1E2328] pb-4">
-                        <div>
-                            <h3 class="text-xl font-bold text-white">Hackathon Project One</h3>
-                            <p class="text-xs font-mono text-[#E5A93C] mt-1">HACKATHON NAME / EVENT</p>
-                        </div>
-                        <span class="text-xs font-mono px-2.5 py-1 rounded bg-[#0B0D0E] text-slate-400 border border-[#1E2328]">2026</span>
+        <div id="detail-modal" class="fixed inset-0 z-50 bg-[#0B0D0E]/85 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-all duration-300">
+            <div id="modal-container" class="bg-[#121518] border border-[#1E2328] rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col">
+                <!-- Modal Top Bar -->
+                <div class="p-5 sm:p-6 border-b border-[#1E2328] flex items-center justify-between sticky top-0 bg-[#121518]/95 backdrop-blur-md z-20">
+                    <div id="modal-header-meta">
+                        <!-- Populated by JS -->
                     </div>
-
-                    <div class="space-y-4 text-sm">
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">PROBLEM</span>
-                            <p class="text-slate-300">Problem Statement — describe the challenge or theme the hackathon presented.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">SOLUTION</span>
-                            <p class="text-slate-300">What You Built — explain the idea you came up with and how you built it in the time limit.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">IMPACT</span>
-                            <p class="text-slate-300">Result / Recognition — share if you won, placed, or what you learned from the experience.</p>
-                        </div>
-                    </div>
-
-                    <!-- 📌 CHANGE HERE: Image Upload / Preview Box -->
-                    <div class="pt-2">
-                        <span class="text-xs font-mono text-slate-500 block mb-2 uppercase">Project Screenshot / Visual</span>
-                        <div class="border-2 border-dashed border-[#1E2328] rounded-xl p-6 text-center hover:border-[#E5A93C]/50 transition cursor-pointer bg-[#0B0D0E]/50 group">
-                            <p class="text-xs text-slate-400 group-hover:text-slate-200 transition">Click to upload or drag &amp; drop</p>
-                            <p class="text-[10px] text-slate-600 mt-1">PNG, JPG, GIF, WEBP</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <span class="text-xs font-mono text-slate-500 block mb-1 uppercase">Storyline</span>
-                        <textarea rows="2" placeholder="Write about this hackathon — the idea, the sprint, the breakthroughs..." class="w-full bg-[#0B0D0E] border border-[#1E2328] rounded-lg p-3 text-xs text-slate-300 focus:outline-none focus:border-[#E5A93C] transition resize-none"></textarea>
-                    </div>
+                    <button onclick="closeItemDetail()" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors font-mono text-sm flex items-center gap-1.5" title="Close (Esc)">
+                        <span>✕ Close</span>
+                    </button>
                 </div>
 
-                <!-- Hackathon 2 -->
-                <div class="p-6 sm:p-8 rounded-2xl border border-[#1E2328] bg-[#121518]/60 space-y-6 interactive-card hover:border-[#E5A93C]/40 transition-all duration-300">
-                    <div class="flex justify-between items-start border-b border-[#1E2328] pb-4">
-                        <div>
-                            <h3 class="text-xl font-bold text-white">Hackathon Project Two</h3>
-                            <p class="text-xs font-mono text-[#E5A93C] mt-1">AI INNOVATION SPRINT</p>
-                        </div>
-                        <span class="text-xs font-mono px-2.5 py-1 rounded bg-[#0B0D0E] text-slate-400 border border-[#1E2328]">2026</span>
-                    </div>
-
-                    <div class="space-y-4 text-sm">
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">PROBLEM</span>
-                            <p class="text-slate-300">Problem Statement — describe the challenge or theme the hackathon presented.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">SOLUTION</span>
-                            <p class="text-slate-300">What You Built — explain the idea you came up with and how you built it in the time limit.</p>
-                        </div>
-                        <div>
-                            <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block mb-1">IMPACT</span>
-                            <p class="text-slate-300">Result / Recognition — share if you won, placed, or what you learned from the experience.</p>
-                        </div>
-                    </div>
-
-                    <div class="pt-2">
-                        <span class="text-xs font-mono text-slate-500 block mb-2 uppercase">Project Screenshot / Visual</span>
-                        <div class="border-2 border-dashed border-[#1E2328] rounded-xl p-6 text-center hover:border-[#E5A93C]/50 transition cursor-pointer bg-[#0B0D0E]/50 group">
-                            <p class="text-xs text-slate-400 group-hover:text-slate-200 transition">Click to upload or drag &amp; drop</p>
-                            <p class="text-[10px] text-slate-600 mt-1">PNG, JPG, GIF, WEBP</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <span class="text-xs font-mono text-slate-500 block mb-1 uppercase">Storyline</span>
-                        <textarea rows="2" placeholder="Write about this hackathon — the idea, the sprint, the breakthroughs..." class="w-full bg-[#0B0D0E] border border-[#1E2328] rounded-lg p-3 text-xs text-slate-300 focus:outline-none focus:border-[#E5A93C] transition resize-none"></textarea>
-                    </div>
+                <!-- Modal Body Content -->
+                <div id="modal-body-content" class="p-6 sm:p-8 space-y-6">
+                    <!-- Populated dynamically by openItemDetail() in script.js -->
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- ======================================================== -->
         <!-- ABOUT & ROADMAP SECTION                                  -->

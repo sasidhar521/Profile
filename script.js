@@ -394,5 +394,452 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    console.log('⚡ Engineering 3D Matrix & Neural Lattice Engine Active.');
+    /* ==========================================================================
+       8. COMPACT DIRECTORY FILTERING (Projects vs Hackathons)
+       ========================================================================== */
+    window.filterDirectory = function(category) {
+        const items = document.querySelectorAll('.directory-item');
+        const btnAll = document.getElementById('filter-all');
+        const btnProject = document.getElementById('filter-project');
+        const btnHackathon = document.getElementById('filter-hackathon');
+
+        [btnAll, btnProject, btnHackathon].forEach(btn => {
+            if (btn) {
+                btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white transition-all';
+            }
+        });
+
+        const activeBtn = document.getElementById('filter-' + category);
+        if (activeBtn) {
+            activeBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all bg-[#E5A93C] text-black shadow-md';
+        }
+
+        items.forEach(item => {
+            if (category === 'all' || item.classList.contains(category)) {
+                item.style.display = 'flex';
+                item.style.opacity = '1';
+                item.style.transform = 'scale(1)';
+            } else {
+                item.style.display = 'none';
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.96)';
+            }
+        });
+    };
+
+    // Auto-filter if URL hash is #hackathons
+    if (window.location.hash === '#hackathons') {
+        window.filterDirectory('hackathon');
+    }
+
+    /* ==========================================================================
+       9. DEEP DIVE DETAIL MODAL ENGINE & INTERACTIVE PHOTO GALLERY
+       ========================================================================== */
+    const itemDetailsDatabase = {
+        'sensors': {
+            badge: 'PROJECT 01 · EMBEDDED SYSTEMS & HARDWARE',
+            institution: 'Alliance University · Batch 2030',
+            title: 'Sensors: Ultrasonic, Infrared, Touch Sensor',
+            tagline: 'Hands-on hardware study: understanding physical transducer working procedures, pinouts, and signal response.',
+            status: 'Calibrated & Benchmarked',
+            images: [
+                {
+                    url: '/assets/aistudio/UTIA_1_6d6f5093.jpeg',
+                    fallback: 'public/assets/aistudio/UTIA_1_6d6f5093.jpeg',
+                    title: 'Multi-Sensor Testbed & Breadboard Wiring Rig',
+                    caption: 'Overview of the prototype circuit featuring the HC-SR04 ultrasonic transducer, infrared reflectance obstacle module, and capacitive touch sensor.'
+                },
+                {
+                    url: '/assets/aistudio/UTIA_2_906d1381.jpeg',
+                    fallback: 'public/assets/aistudio/UTIA_2_906d1381.jpeg',
+                    title: 'Pinout Interfacing, Power Distribution & Pull-Up Configuration',
+                    caption: 'Detailed jumper routing connecting VCC, GND, Echo/Trig, and output state pins to microcontroller signal buses.'
+                },
+                {
+                    url: '/assets/aistudio/UTIA_3_4384cb6d.jpeg',
+                    fallback: 'public/assets/aistudio/UTIA_3_4384cb6d.jpeg',
+                    title: 'Live Signal Verification & Active Proximity Testing',
+                    caption: 'Benchmarking acoustic pulse delays and digital switching thresholds in real-time under laboratory conditions.'
+                }
+            ],
+            objective: 'There was no pre-existing problem statement or artificial challenge for this project. Our primary objective was hands-on discovery: we wanted to know exactly how real sensors work, observe physical phenomena conversion into electrical signals, and master the complete operating procedure through direct breadboard prototyping.',
+            sensorsExplained: [
+                {
+                    name: 'Ultrasonic Sensor (HC-SR04)',
+                    badge: 'Acoustic Time-of-Flight',
+                    color: '#E5A93C',
+                    explanation: 'Emits a 40 kHz high-frequency ultrasonic sound burst via a piezoelectric transmitter transducer and clocks the exact round-trip duration until the echo bounces off an obstacle and hits the receiver. The microcontroller computes distance using the formula: Distance = (Time × Speed of Sound in Air) / 2.'
+                },
+                {
+                    name: 'Infrared (IR) Sensor',
+                    badge: 'Optical Reflection & Photodetection',
+                    color: '#38BDF8',
+                    explanation: 'Constantly beams focused infrared light from an IR emitter LED. When an obstacle reflects this invisible light back into the onboard photodiode detector, the voltage drop across the comparator triggers an instantaneous digital logic shift (HIGH to LOW) to indicate proximity.'
+                },
+                {
+                    name: 'Touch Sensor (Capacitive TTP223)',
+                    badge: 'Electrostatic Capacitance Coupling',
+                    color: '#34D399',
+                    explanation: 'Continuously monitors dielectric capacitance on a conductive copper electrode pad. When a human finger touches or enters the near field, the body natural capacitance alters the charge level, triggering an onboard IC to output a stable, clean, debounced digital pulse.'
+                }
+            ],
+            outcomes: [
+                'Attained comprehensive mastery over the operating procedures, trigger signals, and return pulses of ultrasonic, optical, and capacitive transducers.',
+                'Learned how to solve real hardware edge cases: false reflections, acoustic dead zones (<2cm), ambient IR interference, and mechanical switch bounce.',
+                'Gained practical breadboard wiring, multimeter probing, and oscilloscope/logic analyzer signal verification skills.',
+                'Established the critical hardware foundation needed for autonomous mobile robots, obstacle avoidance algorithms, and embedded AI telemetry.'
+            ],
+            specifications: [
+                { label: 'Operating Voltage', value: '3.3V – 5.0V DC (Breadboard Bus)' },
+                { label: 'Ultrasonic Range', value: '2 cm to 400 cm (±3mm precision)' },
+                { label: 'IR Proximity Range', value: '2 cm to 30 cm (potentiometer adjustable)' },
+                { label: 'Touch Response Time', value: '< 60ms fast mode, low-power standby' },
+                { label: 'MCU Compatibility', value: 'Arduino Uno / ESP32 / Raspberry Pi Pico' }
+            ]
+        },
+        'aster': {
+            badge: 'PROJECT 02 · ENTERPRISE ANALYTICS',
+            institution: 'Alliance University',
+            title: 'Aster Labs Analytics Platform',
+            tagline: 'High-density operational telemetry dashboard engineered for real-time metric visualization and swift user onboarding.',
+            status: 'Design Prototype',
+            images: [],
+            objective: 'Developing an intuitive operational control center for telemetry pipelines, reducing cognitive load for engineers monitoring distributed services.',
+            overview: 'Aster Labs Analytics delivers rapid data comprehension through visual metric hierarchy, custom charting widgets, and low-latency state synchronizations.',
+            outcomes: [
+                'Designed responsive data visualizations with sub-100ms render speeds for large dataset streaming.',
+                'Created modular UI component systems with high keyboard accessibility and theme flexibility.'
+            ],
+            specifications: [
+                { label: 'Tech Stack', value: 'React, TypeScript, Tailwind CSS, Chart.js' },
+                { label: 'Target Users', value: 'Data Analysts, DevOps, System Administrators' }
+            ]
+        },
+        'crest': {
+            badge: 'PROJECT 03 · HEALTHTECH ACCESSIBILITY',
+            institution: 'Alliance University',
+            title: 'Crest Health Patient Portal',
+            tagline: 'Human-centered patient engagement platform prioritizing appointment clarity, medical record privacy, and WCAG AAA compliance.',
+            status: 'Accessible Architecture',
+            images: [],
+            objective: 'Eliminating healthcare communication friction by delivering a patient portal accessible to individuals with varying visual and physical abilities.',
+            overview: 'Crest Health combines high-contrast color palettes, screen reader optimizations, and simplified appointment workflows.',
+            outcomes: [
+                'Achieved 100% automated accessibility audit scoring against WCAG AAA contrast and focus indicators.',
+                'Reduced appointment booking time to under 3 clicks for senior users.'
+            ],
+            specifications: [
+                { label: 'Tech Stack', value: 'HTML5 Semantic, ARIA Roles, Modern CSS Grid' },
+                { label: 'Compliance', value: 'WCAG 2.1 AAA Accessibility Standards' }
+            ]
+        },
+        'harbor': {
+            badge: 'PROJECT 04 · E-COMMERCE CONVERSION',
+            institution: 'Alliance University',
+            title: 'Harbor Retail Storefront',
+            tagline: 'Mobile-first retail catalog with optimized checkout pathways and progressive image hydration.',
+            status: 'Full Prototype',
+            images: [],
+            objective: 'Architecting a storefront experience that loads under 1 second on cellular networks while maintaining rich visual storytelling.',
+            overview: 'Harbor Retail balances brand aesthetics with frictionless add-to-cart dynamics, responsive media queries, and micro-interactions.',
+            outcomes: [
+                'Optimized mobile navigation drawer and one-thumb product card ergonomics.',
+                'Built instant filter and category search without layout shift.'
+            ],
+            specifications: [
+                { label: 'Tech Stack', value: 'JavaScript ES6+, Modern Flexbox/Grid, Web Animations API' },
+                { label: 'Performance', value: '98+ Google Lighthouse Performance Score' }
+            ]
+        },
+        'hackathon-1': {
+            badge: 'HACKATHON SPRINT 01 · 24-HOUR RAPID MVP',
+            institution: 'Alliance University Hackathon 2026',
+            title: 'Alliance 24h Rapid Sprint Prototype',
+            tagline: 'Conceiving, designing, and coding a functional MVP from scratch under high-intensity 24-hour hackathon constraints.',
+            status: 'Finalist Demo',
+            images: [],
+            objective: 'Tackling rapid ideation, architectural decision-making, and live prototype demonstration within a single sleepless 24-hour sprint.',
+            overview: 'Collaborated with team members to prioritize essential features, build functional proof-of-concept logic, and deliver a convincing stage presentation to industry judges.',
+            outcomes: [
+                'Delivered a fully working demo under extreme time constraints with zero critical bugs during the live pitch.',
+                'Mastered rapid team Git workflows, branch merging, and emergency triage.'
+            ],
+            specifications: [
+                { label: 'Event', value: 'Alliance University Annual Tech Hackathon' },
+                { label: 'Duration', value: '24 Hours Continuous Coding' }
+            ]
+        },
+        'hackathon-2': {
+            badge: 'HACKATHON SPRINT 02 · AI INNOVATION',
+            institution: 'Alliance University · AI & ML Society',
+            title: 'AI Innovation Challenge Sprint',
+            tagline: 'Developing an applied machine learning pipeline and inference interface for smart campus problem statements.',
+            status: 'Completed Prototype',
+            images: [],
+            objective: 'Applying foundational machine learning models to solve automated pattern detection and smart resource allocation challenges on campus.',
+            overview: 'Integrated Python machine learning preprocessing with an interactive browser dashboard to visualize prediction probabilities and anomaly detections.',
+            outcomes: [
+                'Gained practical experience implementing inference endpoints and translating AI model outputs into intuitive UI elements.',
+                'Received special recognition for clean technical documentation and presentation.'
+            ],
+            specifications: [
+                { label: 'Focus Area', value: 'Machine Learning, Predictive Analytics, Python' },
+                { label: 'Department', value: 'AU Quasar AI & ML Division' }
+            ]
+        }
+    };
+
+    window.openItemDetail = function(id) {
+        const item = itemDetailsDatabase[id];
+        if (!item) return;
+
+        const modal = document.getElementById('detail-modal');
+        const headerMeta = document.getElementById('modal-header-meta');
+        const bodyContent = document.getElementById('modal-body-content');
+
+        if (!modal || !headerMeta || !bodyContent) return;
+
+        // Populate Header Meta
+        headerMeta.innerHTML = `
+            <div class="flex items-center gap-2 mb-1">
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#E5A93C]/10 text-[#E5A93C] border border-[#E5A93C]/20 font-bold uppercase tracking-wider">
+                    ${item.badge}
+                </span>
+                <span class="text-xs font-mono text-slate-400 hidden sm:inline">
+                    · ${item.institution}
+                </span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black text-white leading-tight">
+                ${item.title}
+            </h2>
+        `;
+
+        // Build Body Content
+        let galleryHtml = '';
+        if (item.images && item.images.length > 0) {
+            const firstImg = item.images[0];
+            galleryHtml = `
+                <!-- Interactive High-Resolution Gallery -->
+                <div class="space-y-4 rounded-2xl bg-[#0B0D0E]/80 border border-[#1E2328] p-4 sm:p-5">
+                    <div class="flex items-center justify-between pb-3 border-b border-[#1E2328]">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#E5A93C] animate-pulse"></span>
+                            <span class="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold">
+                                Project Hardware Gallery (${item.images.length} Photos)
+                            </span>
+                        </div>
+                        <span class="text-[11px] font-mono text-[#E5A93C]">Click thumbnails to switch view</span>
+                    </div>
+
+                    <!-- Main Featured Image -->
+                    <div class="relative rounded-xl overflow-hidden border border-[#1E2328] bg-black/60 aspect-video sm:aspect-[16/9] flex items-center justify-center">
+                        <img id="gallery-main-img" 
+                             src="${firstImg.url}" 
+                             onerror="this.src='${firstImg.fallback}'"
+                             alt="${firstImg.title}" 
+                             class="w-full h-full object-contain sm:object-cover transition-all duration-300">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-4 sm:p-5">
+                            <h4 id="gallery-img-title" class="text-white font-bold text-sm sm:text-base">
+                                ${firstImg.title}
+                            </h4>
+                            <p id="gallery-img-caption" class="text-xs text-slate-300 font-mono mt-1">
+                                ${firstImg.caption}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Thumbnail Strip -->
+                    <div class="grid grid-cols-3 gap-3 pt-1">
+                        ${item.images.map((img, idx) => `
+                            <button onclick="selectGalleryPhoto(${idx}, '${id}')" 
+                                    id="gallery-thumb-${idx}"
+                                    class="gallery-thumb rounded-lg overflow-hidden border ${idx === 0 ? 'border-[#E5A93C] ring-2 ring-[#E5A93C]/40' : 'border-[#1E2328] opacity-70 hover:opacity-100'} transition-all duration-200 aspect-video relative group bg-black">
+                                <img src="${img.url}" 
+                                     onerror="this.src='${img.fallback}'"
+                                     alt="${img.title}" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                <span class="absolute bottom-1 right-1 bg-black/80 text-[10px] font-mono px-1.5 py-0.5 rounded text-white border border-white/10">
+                                    Photo ${idx + 1}
+                                </span>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Specific Sensors Breakdown Section
+        let sensorsHtml = '';
+        if (item.sensorsExplained) {
+            sensorsHtml = `
+                <!-- Sensor Working Procedures (2-3 lines each) -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-mono uppercase tracking-widest text-[#E5A93C]">Technical Working Procedures</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        ${item.sensorsExplained.map(s => `
+                            <div class="p-4 rounded-xl border border-[#1E2328] bg-[#0B0D0E]/90 space-y-2 hover:border-[#E5A93C]/40 transition">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[10px] font-mono px-2 py-0.5 rounded uppercase font-semibold" style="color: ${s.color}; background: ${s.color}15; border: 1px solid ${s.color}35;">
+                                        ${s.badge}
+                                    </span>
+                                </div>
+                                <h4 class="font-bold text-sm text-white">${s.name}</h4>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    ${s.explanation}
+                                </p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Objectives & Honest Engineering Focus (No Challenge)
+        const objectiveHtml = item.objective ? `
+            <div class="p-5 rounded-xl border border-[#1E2328] bg-[#0B0D0E]/60 space-y-2">
+                <div class="flex items-center gap-2 text-xs font-mono uppercase text-[#E5A93C] font-semibold">
+                    <span>💡 Project Purpose &amp; Focus</span>
+                </div>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    ${item.objective}
+                </p>
+            </div>
+        ` : '';
+
+        // Outcomes
+        let outcomesHtml = '';
+        if (item.outcomes && item.outcomes.length > 0) {
+            outcomesHtml = `
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-xs font-mono uppercase text-emerald-400 font-semibold">
+                        <span>🎯 Key Outcomes &amp; Engineering Competencies Gained</span>
+                    </div>
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                        ${item.outcomes.map(out => `
+                            <li class="flex items-start gap-2.5 p-3 rounded-lg bg-[#0B0D0E]/80 border border-[#1E2328]">
+                                <span class="text-emerald-400 font-bold">✓</span>
+                                <span>${out}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+
+        // Specifications
+        let specsHtml = '';
+        if (item.specifications && item.specifications.length > 0) {
+            specsHtml = `
+                <div class="space-y-3 pt-2">
+                    <span class="text-xs font-mono uppercase text-slate-400 font-semibold">Technical Specifications &amp; Parameters</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+                        ${item.specifications.map(spec => `
+                            <div class="p-3 rounded-lg bg-[#0B0D0E]/70 border border-[#1E2328] flex justify-between items-center">
+                                <span class="text-slate-400">${spec.label}:</span>
+                                <span class="text-white font-bold text-right">${spec.value}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Combine into modal
+        bodyContent.innerHTML = `
+            <div class="space-y-6">
+                <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
+                    ${item.tagline}
+                </p>
+
+                ${galleryHtml}
+                ${objectiveHtml}
+                ${sensorsHtml}
+                ${outcomesHtml}
+                ${specsHtml}
+
+                <div class="pt-4 border-t border-[#1E2328] flex justify-end">
+                    <button onclick="closeItemDetail()" class="px-5 py-2.5 rounded-lg bg-[#E5A93C] text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#D4982B] transition">
+                        Back to Portfolio
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Reveal modal with animation
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.classList.add('opacity-100', 'pointer-events-auto');
+        const container = document.getElementById('modal-container');
+        if (container) {
+            container.classList.remove('scale-95');
+            container.classList.add('scale-100');
+        }
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeItemDetail = function() {
+        const modal = document.getElementById('detail-modal');
+        const container = document.getElementById('modal-container');
+        if (!modal) return;
+
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modal.classList.remove('opacity-100', 'pointer-events-auto');
+        if (container) {
+            container.classList.add('scale-95');
+            container.classList.remove('scale-100');
+        }
+        document.body.style.overflow = '';
+    };
+
+    // Switch image in gallery
+    window.selectGalleryPhoto = function(index, itemId) {
+        const item = itemDetailsDatabase[itemId];
+        if (!item || !item.images || !item.images[index]) return;
+
+        const imgData = item.images[index];
+        const mainImg = document.getElementById('gallery-main-img');
+        const titleEl = document.getElementById('gallery-img-title');
+        const captionEl = document.getElementById('gallery-img-caption');
+
+        if (mainImg) {
+            mainImg.style.opacity = '0.3';
+            setTimeout(() => {
+                mainImg.src = imgData.url;
+                mainImg.onerror = () => { mainImg.src = imgData.fallback; };
+                mainImg.alt = imgData.title;
+                mainImg.style.opacity = '1';
+            }, 150);
+        }
+
+        if (titleEl) titleEl.textContent = imgData.title;
+        if (captionEl) captionEl.textContent = imgData.caption;
+
+        // Update active thumbnail borders
+        document.querySelectorAll('.gallery-thumb').forEach((thumb, idx) => {
+            if (idx === index) {
+                thumb.className = 'gallery-thumb rounded-lg overflow-hidden border border-[#E5A93C] ring-2 ring-[#E5A93C]/40 transition-all duration-200 aspect-video relative group bg-black opacity-100';
+            } else {
+                thumb.className = 'gallery-thumb rounded-lg overflow-hidden border border-[#1E2328] opacity-70 hover:opacity-100 transition-all duration-200 aspect-video relative group bg-black';
+            }
+        });
+    };
+
+    // Close on backdrop click or ESC key
+    const detailModal = document.getElementById('detail-modal');
+    if (detailModal) {
+        detailModal.addEventListener('click', (e) => {
+            if (e.target === detailModal) {
+                window.closeItemDetail();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            window.closeItemDetail();
+        }
+    });
+
+    console.log('⚡ Engineering 3D Matrix & Neural Lattice Engine Active with Dedicated Modal System.');
 });
