@@ -841,5 +841,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+ 
     console.log('⚡ Engineering 3D Matrix & Neural Lattice Engine Active with Dedicated Modal System.');
+
 });
+// IN YOUR GITHUB REPO (script.js, around line 445 inside itemDetailsDatabase['sensors'])
+// ❌ OLD:
+// url: '/assets/aistudio/UTIA_1_6d6f5093.jpeg', fallback: 'public/assets/aistudio/UTIA_1_6d6f5093.jpeg'
+
+// ✅ NEW:
+images: [
+    {
+        url: './UTIA_1.jpeg',
+        fallback: 'UTIA_1.jpeg',
+        title: 'Multi-Sensor Testbed & Breadboard Wiring Rig',
+        caption: 'Overview of the prototype circuit featuring the HC-SR04 ultrasonic transducer, infrared reflectance obstacle module, and capacitive touch sensor.'
+    },
+    {
+        url: './UTIA_2.jpeg',
+        fallback: 'UTIA_2.jpeg',
+        title: 'Pinout Interfacing, Power Distribution & Pull-Up Configuration',
+        caption: 'Detailed jumper routing connecting VCC, GND, Echo/Trig, and output state pins to microcontroller signal buses.'
+    },
+    {
+        url: './UTIA_3.jpeg',
+        fallback: 'UTIA_3.jpeg',
+        title: 'Live Signal Verification & Active Proximity Testing',
+        caption: 'Benchmarking acoustic pulse delays and digital switching thresholds in real-time under laboratory conditions.'
+    }
+]

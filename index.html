@@ -613,5 +613,14 @@
 
     <!-- External Script -->
     <script src="script.js"></script>
+    <!-- IN YOUR GITHUB REPO (index.html, around line 252) -->
+<!-- ❌ OLD (Broken because it looks for /assets at root domain): -->
+<!-- <img src="/assets/aistudio/UTIA_1_6d6f5093.jpeg" onerror="this.src='public/assets/aistudio/UTIA_1_6d6f5093.jpeg'" ...> -->
+
+<!-- ✅ NEW (Fixed relative path pointing to the file in your repo root): -->
+<img src="./UTIA_1.jpeg" 
+     onerror="this.src='UTIA_1.jpeg'" 
+     alt="Sensors Circuit" 
+     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
 </body>
 </html>
