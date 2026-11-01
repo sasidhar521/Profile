@@ -848,7 +848,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // IN YOUR GITHUB REPO (script.js, around line 445 inside itemDetailsDatabase['sensors'])
 // ❌ OLD:
 // url: '/assets/aistudio/UTIA_1_6d6f5093.jpeg', fallback: 'public/assets/aistudio/UTIA_1_6d6f5093.jpeg'
-
+// Update your image paths to include the repository subdirectory:
+const projectImages = [
+  "/Profile/UTIA_1.jpeg",
+  "/Profile/UTIA_2.jpeg",
+  "/Profile/UTIA_3.jpeg"
+];
 // ✅ NEW:
 images: [
     {
